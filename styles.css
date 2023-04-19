@@ -23,9 +23,25 @@ ul {
 }
 
 .whole-project {
-    max-width: 600px;
-    margin: 30px auto;
     padding: 20px;
     border: 1px solid #202124;
     border-radius: 5px;
+}
+
+.whole-project {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.weather-temperature img {
+    margin-right: 5px;
+    height: 64px;
+    width: 64px;
+}
+
+.weather-temperature strong {
+    color: #202124;
+    font-size: 64px;
+    line-height: 1;
+    font-weight: 400;
 }
