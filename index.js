@@ -1,4 +1,36 @@
+let currentTime = new Date();
+
+let currentHour = currentTime.getHours();
+let currentMinutes = currentTime.getMinutes();
+
+if (currentHour < 10) {
+  currentHour = `0${currentHour}`;
+}
+if (currentMinutes < 10) {
+  currentMinutes = `0${currentMinutes}`;
+}
+
+function createDate(date) {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let currentDay = days[date.getDay()];
+  return currentDay;
+}
+
+let dateElement = document.querySelector("#date");
+dateElement.innerHTML = `${createDate(
+  currentTime
+)} ${currentHour}:${currentMinutes}`;
+
 function displayTemperature(response) {
+  console.log(response);
   let currentTemperature = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
   let descriptionElement = document.querySelector("#description");
@@ -12,6 +44,7 @@ function displayTemperature(response) {
 }
 
 let apiKey = "40f1f0763f9od6a15t0ca82fb440c4ef";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=Nottingham&key=${apiKey}&units=metric`;
+let city = "London";
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
 axios.get(apiUrl).then(displayTemperature);
