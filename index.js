@@ -29,21 +29,33 @@ dateElement.innerHTML = `${createDate(
   currentTime
 )} ${currentHour}:${currentMinutes}`;
 
+function ForecastDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
+
+  return days[day];
+}
+
 function DisplayForecast(response) {
-  console.log(response.data);
+  let forecast = response.data.daily;
+
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col-2">
-      <div class="weather-forecast-date">${day}</div>
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-2">
+      <div class="weather-forecast-date">${ForecastDate(forecastDay.time)}</div>
       <ul>
         <li>
           <img
-            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+              forecastDay.condition.icon
+            }.png"
             alt=""
             width="42"
           />
@@ -51,13 +63,18 @@ function DisplayForecast(response) {
         <li>
           <div class="weather-forecast-temperature">
             <strong>
-              <span class="weather-forecast-temperature-max">13°</span>
-              <span class="weather-forecast-temperature-min">5°</span>
+              <span class="weather-forecast-temperature-max">${Math.round(
+                forecastDay.temperature.maximum
+              )}°</span>
+              <span class="weather-forecast-temperature-min">${Math.round(
+                forecastDay.temperature.minimum
+              )}°</span>
             </strong>
           </div>
         </li>
       </ul>
     </div>`;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
