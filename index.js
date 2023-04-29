@@ -29,6 +29,40 @@ dateElement.innerHTML = `${createDate(
   currentTime
 )} ${currentHour}:${currentMinutes}`;
 
+function DisplayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-2">
+      <div class="weather-forecast-date">${day}</div>
+      <ul>
+        <li>
+          <img
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+            alt=""
+            width="42"
+          />
+        </li>
+        <li>
+          <div class="weather-forecast-temperature">
+            <strong>
+              <span class="weather-forecast-temperature-max">13°</span>
+              <span class="weather-forecast-temperature-min">5°</span>
+            </strong>
+          </div>
+        </li>
+      </ul>
+    </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayTemperature(response) {
   let currentTemperature = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -61,6 +95,7 @@ function handlesumbit(event) {
 }
 
 search("Nottingham");
+DisplayForecast();
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handlesumbit);
