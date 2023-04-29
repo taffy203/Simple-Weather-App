@@ -29,7 +29,8 @@ dateElement.innerHTML = `${createDate(
   currentTime
 )} ${currentHour}:${currentMinutes}`;
 
-function DisplayForecast() {
+function DisplayForecast(response) {
+  console.log(response.data);
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
@@ -63,6 +64,13 @@ function DisplayForecast() {
   forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(city) {
+  let apiKey = "40f1f0763f9od6a15t0ca82fb440c4ef";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(DisplayForecast);
+}
+
 function displayTemperature(response) {
   let currentTemperature = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -80,6 +88,8 @@ function displayTemperature(response) {
     "src",
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   );
+
+  getForecast(response.data.city);
 }
 
 function search(city) {
@@ -95,7 +105,6 @@ function handlesumbit(event) {
 }
 
 search("Nottingham");
-DisplayForecast();
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handlesumbit);
